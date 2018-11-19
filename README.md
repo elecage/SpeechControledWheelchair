@@ -16,3 +16,16 @@
 |  9  | JOY_X_OUT| Joystick X axis output |
 | 10  | JOY_Y_OUT| Joystick Y axis output |
 | 11  | GND      | Ground                 |
+
+
+# Control box color table
+| color  | name           |
+|--------|----------------|
+| white  | JOY_Y_OUT      |
+| black  | GND            |
+| purple | JOY_X_OUT      |
+| gray   | unused         |
+| green  | GND            |
+| blue   | unused(X_Axis) |
+| orange | Vin            |
+| yellow | unused(Y_Axis) |
