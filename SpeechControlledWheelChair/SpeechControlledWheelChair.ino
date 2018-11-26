@@ -150,11 +150,15 @@ void loop() {
  //   Serial.print(joyXIn);
   //  Serial.print("     ");
   //  Serial.println(joyYIn);
-    dac_value = map(joyXIn, 0, 1023, 819, 3276);  // 조이스틱 입력은 10비트이며 출력은 12비트이므로 숫자 변환
+ //   dac_value = map(joyXIn, 0, 1023, 819, 3276);  // 조이스틱 입력은 10비트이며 출력은 12비트이므로 숫자 변환
+    dac_value = map(joyXIn, 0, 1023, 0, 4095);  // 조이스틱 입력은 10비트이며 출력은 12비트이므로 숫자 변환
+
     dac.begin(X_ADDR);                            // X 축 DAC 활성화
     dac.setVoltage(dac_value, false);             // X축 전압 출력
     
-    dac_value = map(joyYIn, 0, 1023, 819, 3276);  // 조이스틱 입력은 10비트이며 출력은 12비트이므로 숫자 변환
+ //   dac_value = map(joyYIn, 0, 1023, 819, 3276);  // 조이스틱 입력은 10비트이며 출력은 12비트이므로 숫자 변환
+    dac_value = map(joyYIn, 0, 1023, 0, 4095);  // 조이스틱 입력은 10비트이며 출력은 12비트이므로 숫자 변환
+
     dac.begin(Y_ADDR);                            // Y 축 DAC 활성화
     dac.setVoltage(dac_value, false);             // Y축 전압 출력
   }
