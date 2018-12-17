@@ -71,7 +71,6 @@ void getUltrasound()
     fallAlert = false;
   }
   */
-  fallAlert = false;
 }
 void setup() {
   // put your setup code here, to run once:
