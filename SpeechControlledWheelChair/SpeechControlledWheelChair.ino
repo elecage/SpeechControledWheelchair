@@ -33,8 +33,10 @@ unsigned short joyYIn = 0;
 uint8_t records[7];
 uint8_t buf[64];
 
-UltraSonicDistanceSensor forwardSensor(12, 13); 
-UltraSonicDistanceSensor bottomSensor(10, 11); 
+//UltraSonicDistanceSensor forwardSensor(12, 13); 
+//UltraSonicDistanceSensor bottomSensor(10, 11); 
+UltraSonicDistanceSensor forwardSensor(10, 11); 
+UltraSonicDistanceSensor bottomSensor(12, 13); 
 
 bool fallAlert = false;
 bool obstacleAlert = false;
@@ -49,22 +51,27 @@ void getUltrasound()
 {
   forwardDistance = forwardSensor.measureDistanceCm();
   bottomDistance = bottomSensor.measureDistanceCm();
-
+/*
   if(forwardDistance < 80) // 전방 80cm 이내에 장애물이 있으면
   {
     obstacleAlert = true;
-    Serial.println("ObstacleAlert");
+    Serial.print(forwardDistance);
+    Serial.println("\t: ObstacleAlert");
   } else
   {
     obstacleAlert = false;
   }
+  
   if(bottomDistance > 150) // 추락 위험이 있으면
   {
     fallAlert = true;
-    Serial.println("Fall Alert");
+    Serial.print(bottomDistance);
+    Serial.println("\t: Fall Alert");
   } else {
     fallAlert = false;
   }
+  */
+  fallAlert = false;
 }
 void setup() {
   // put your setup code here, to run once:
@@ -84,30 +91,30 @@ void setup() {
 void moveGo()
 {
   dac.begin(X_ADDR);
-  dac.setVoltage(2048 + 500, false);
+  dac.setVoltage(2048 + 750, false);
   dac.begin(Y_ADDR);
-  dac.setVoltage(2048 - 210, false);
+  dac.setVoltage(2048-120, false);
 }
 void moveBack()
 {
   dac.begin(X_ADDR);
   dac.setVoltage(2048 - 500, false);
   dac.begin(Y_ADDR);
-  dac.setVoltage(2048  + 95, false);
+  dac.setVoltage(2048 -150 , false);
 }
 void moveLeft()
 {
     dac.begin(X_ADDR);
   dac.setVoltage(2048, false);
   dac.begin(Y_ADDR);
-  dac.setVoltage(2048 - 500, false);
+  dac.setVoltage(2048 - 400, false);
 }
 void moveRight()
 {
     dac.begin(X_ADDR);
   dac.setVoltage(2048, false);
   dac.begin(Y_ADDR);
-  dac.setVoltage(2048 + 500, false);
+  dac.setVoltage(2048 + 400, false);
 }
 void stopWheelchair()
 {
