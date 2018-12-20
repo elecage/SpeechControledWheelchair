@@ -8,12 +8,12 @@
 #include "SoftwareSerial.h"
 #include "VoiceRecognitionV3.h"
 
-#define JOY_X_IN  A0
-#define JOY_Y_IN  A1
+#define JOY_X_IN  A1
+#define JOY_Y_IN  A0
 #define FSR       A2
 
-#define X_ADDR 0x60
-#define Y_ADDR 0x61
+#define X_ADDR 0x61
+#define Y_ADDR 0x60
 
 #define GO    0   // 앞으로
 #define BACK  1   // 뒤로
@@ -51,7 +51,7 @@ void getUltrasound()
 {
   forwardDistance = forwardSensor.measureDistanceCm();
   bottomDistance = bottomSensor.measureDistanceCm();
-/*
+
   if(forwardDistance < 80) // 전방 80cm 이내에 장애물이 있으면
   {
     obstacleAlert = true;
@@ -70,7 +70,7 @@ void getUltrasound()
   } else {
     fallAlert = false;
   }
-  */
+  
 }
 void setup() {
   // put your setup code here, to run once:
@@ -81,8 +81,8 @@ void setup() {
   dac.begin(Y_ADDR);
   dac.setVoltage(2048, false);    // Y축 입력을 중앙값으로
   Serial.println("Start wheelchair");
-  MsTimer2::set(500, getUltrasound);
-  MsTimer2::start();
+  MsTimer2::set(1000, getUltrasound); 
+ // MsTimer2::start();             // 초음파를 사용하려면 앞의 //를 없앨것
 
   
 }
@@ -92,7 +92,7 @@ void moveGo()
   dac.begin(X_ADDR);
   dac.setVoltage(2048 + 750, false);
   dac.begin(Y_ADDR);
-  dac.setVoltage(2048-120, false);
+  dac.setVoltage(2048-200, false);
 }
 void moveBack()
 {
