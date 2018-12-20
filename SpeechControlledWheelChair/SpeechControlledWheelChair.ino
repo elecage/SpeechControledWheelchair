@@ -50,9 +50,9 @@ int currentState = STOP;
 void getUltrasound()
 {
   forwardDistance = forwardSensor.measureDistanceCm();
-  bottomDistance = bottomSensor.measureDistanceCm();
+//  bottomDistance = bottomSensor.measureDistanceCm();
 
-  if(forwardDistance < 80) // 전방 80cm 이내에 장애물이 있으면
+  if(forwardDistance < 80 && forwardDistance >= 0) // 전방 80cm 이내에 장애물이 있으면
   {
     obstacleAlert = true;
     Serial.print(forwardDistance);
@@ -81,9 +81,8 @@ void setup() {
   dac.begin(Y_ADDR);
   dac.setVoltage(2048, false);    // Y축 입력을 중앙값으로
   Serial.println("Start wheelchair");
-  MsTimer2::set(1000, getUltrasound); 
- // MsTimer2::start();             // 초음파를 사용하려면 앞의 //를 없앨것
-
+  MsTimer2::set(200, getUltrasound); 
+  MsTimer2::start();             // 초음파를 사용하려면 앞의 //를 없앨것
   
 }
 
@@ -93,6 +92,8 @@ void moveGo()
   dac.setVoltage(2048 + 750, false);
   dac.begin(Y_ADDR);
   dac.setVoltage(2048-200, false);
+//  MsTimer2::start();             // 초음파를 사용하려면 앞의 //를 없앨것
+
 }
 void moveBack()
 {
@@ -121,6 +122,8 @@ void stopWheelchair()
   dac.setVoltage(2048 , false);
   dac.begin(Y_ADDR);
   dac.setVoltage(2048 , false);
+ // MsTimer2::stop();             // 초음파를 사용하려면 앞의 //를 없앨것
+
 }
 
 void loop() {
@@ -178,6 +181,7 @@ void loop() {
       Serial.print("Voice : ");
       switch(buf[1]){
         case GO:
+       
           moveGo();
           currentState = GO;
           Serial.println("GO");
@@ -207,19 +211,19 @@ void loop() {
   }
   if(fallAlert == true) // 추락 위험이 있을 때
   {
-    stopWheelchair();
-    moveBack();
-    delay(1000);
-    stopWheelchair();
+   // stopWheelchair();
+   // moveBack();
+   // delay(1000);
+   // stopWheelchair();
     Serial.println("Fall Alert"); 
   }
   if(obstacleAlert == true) // 장애물이 있을 때
   {
     if(currentState == GO)
     {
-      moveLeft();
-      delay(1000);
-      moveGo();
+      stopWheelchair();
+   //   delay(1000);
+   //   moveGo();
       Serial.println("Obstacle Alert");
     }
   }
